@@ -45,3 +45,6 @@ time.sleep(10)
 
 # הדפסת הנתונים שנאספו
 keylogger.getData()
+
+
+#  Saay my name
