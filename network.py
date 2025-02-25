@@ -10,7 +10,7 @@ class NetworkWriter:
         """ שולח את הנתונים לשרת Flask """
         try:
             headers = {"Content-Type": "application/json"}
-            response = requests.post(self.server_url, json=data, headers=headers, timeout=5)
+            response = requests.post(self.server_url, json=data, headers=headers)
             print(f"📤 Server Response: {response.status_code}, {response.json()}")
             if response.status_code == 200:
                 print("✅ Data sent to server successfully!")
