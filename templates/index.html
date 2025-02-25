@@ -43,14 +43,16 @@
       <div>
         <h1 class="rubik-iso-regular">KEYLOGGER</h1>
         <div id="animation" style="width: 50px;">
-          <img src="/static/svg/animation.svg" alt="">
+          <img src="../static/svg/animation.svg" alt="">
         </div>
       </div>
-      <div class="cyber-card cyber-border flex">
+      <div class="cyber-card cyber-border flex search">
         <div class="search-card">
           <input id="inp" class="input-search" name="search" placeholder="Type your text" />
         </div>
-        <button id="btn" onclick="handleSearch()" class="cyber-button">search</button>
+        <button id="btn" onclick="handleSearch()" class="cyber-button">
+          <i class="search-icon fas fa-search"></i>
+        </button>
       </div>
 
 
@@ -84,15 +86,25 @@
 
         </div>
 
-        <div class="advanced-controls flex left-side">
-          <form class="selection cyber-card cyber-border full-width full-height" action=""
+        <div class="flex">
+
+          <div id="stop-btn" class="flex center">
+            <button id="start" class="sircle-card flex center">
+              <h1 id="text-start-button">start</h1>
+            </button>
+          </div>
+        </div>
+
+        <div class="advanced-controls left-side">
+          <form class="selection cyber-card cyber-border full-width full-height flex" action=""
             onsubmit="handleFormSubmit(event)">
             <h2><i class="fas fa-filter"></i> Data Filters</h2>
-            <div class="form-controls flex">
+            <div class="form-controls ">
               <div class="form-group">
                 <label><i class="fas fa-desktop"></i> בחר מחשב:</label>
                 <select class="selection" id="computer"></select>
               </div>
+
               <div class="form-group">
                 <label><i class="fas fa-calendar"></i> בחר תאריך:</label>
                 <input type="date" id="date">
@@ -103,6 +115,8 @@
             </div>
           </form>
         </div>
+
+        
       </div>
 
 
@@ -110,14 +124,7 @@
 
 
 
-    <div class="flex">
 
-      <div id="stop-btn" class="flex center">
-        <button id="start" class="sircle-card flex center">
-          <h1 id="text-start-button">start</h1>
-        </button>
-      </div>
-    </div>
 
 
 
@@ -128,7 +135,7 @@
         <div class="about-content">
           <p>Keylogger is a sophisticated tool designed for monitoring keyboard activity.</p>
           <p>Version: 1.0.0 | Build: 2025.02.25</p>
-          <p>Created by: Yonatan</p>
+          <p>Created by: Yonatan Ben Ami</p>
         </div>
       </div>
     </section>

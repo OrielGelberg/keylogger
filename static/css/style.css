@@ -13,7 +13,7 @@
   opacity: 1;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 15px;
   align-items: center;
   justify-content: center;
 }
@@ -77,6 +77,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   filter: brightness(0) saturate(100%) invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%);
   /* צבע ספציפי - ירוק במקרה זה */
 }
+
 
 .rubik-iso-regular {
   font-family: "Rubik Iso", serif;
@@ -161,9 +162,10 @@ body::before {
 
 .flex {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
+  text-align: center;
   gap: 15px;
 }
 
@@ -173,6 +175,7 @@ body::before {
 
 .cyber-card {
   max-height: 200px;
+  padding: 10px;
   background: rgba(10, 11, 30, 0.8);
   border: 1px solid var(--neon-blue);
   border-radius: 20px;
@@ -260,9 +263,9 @@ body::before {
 }
 
 .cyber-button {
+  padding: 8px 20px;
   background: transparent;
   cursor: pointer;
-  width: 15%;
 
   border: 1px solid var(--neon-green);
   border-radius: 20px;
@@ -302,10 +305,15 @@ body::before {
 }
 
 .search-card {
-  width: 80%;
-  height: 30px;
+  width: 90%;
+  height: 40px;
+  position: relative;
 }
 
+.search{
+  padding: 25px;
+  flex-direction: row;
+}
 .input-search {
   width: 100%;
   height: 100%;
@@ -509,7 +517,6 @@ body.modal-open {
 }
 
 /* סגנונות לתוכן הדוגמה */
-.sample-content {}
 
 .interactive-element {
   margin: 10px;
@@ -518,10 +525,11 @@ body.modal-open {
   cursor: pointer;
 }
 
+
 option,
 select,
 input {
-  width: 200px;
+  padding: 10px;
   background: var(--cyber-dark);
   color: #39ff14;
   border: 1px solid var(--neon-green);
@@ -529,21 +537,20 @@ input {
   border-radius: 10px;
 }
 
-input {
-  width: 100px;
-}
 
 #search {
   visibility: hidden;
 }
 
 .stats-container {
+  height: 200px;
   flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 20px;
 }
 
 .stats-panel {
+  height: 200px;
   flex: 1;
   width: 100%;
   display: flex;
@@ -599,8 +606,11 @@ input {
 }
 
 .form-controls {
+  width: 80%;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+  gap: 10px;
+  
 }
 
 .form-group {
@@ -624,25 +634,23 @@ input {
   height: 400px;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   gap: 10px;
 }
 
 .right-side {
-  background-color: #b537f2;
-  width: 50%;
+  width: 33%;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 5px;
+  gap: 10px;
 }
 
 .left-side {
-  background-color: #ff3399;
-  width: 50%;
+  width: 33%;
   height: 100%;
   display: flex;
   flex-direction: column;
