@@ -14,10 +14,9 @@ class FileWriter:
 
 
 
-                print(f" הנתונים נשמרו בהצלחה ל-{self.filename}")
                 return data
             except Exception as e:
-                print(f" שגיאה בשמירת הקובץ: {e}")
+                print(f"Error saving file: {e}")
                 return None
 
 
