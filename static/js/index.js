@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const mainContent = document.querySelector('.main-content');
     mainContent.style.visibility = 'hidden';
     mainContent.style.opacity = '0';
-
     const path = document.querySelector("#animated-svg path");
 
     if (path) {
@@ -180,6 +179,7 @@ async function handleSearch() {
 function handleStartButtonClick() {
     const { startButtonText, circle, animation } = ELEMENTS;
     const isStarting = startButtonText.innerHTML === "start";
+
     
     startButtonText.innerHTML = isStarting ? "stop" : "start";
     startButtonText.style.color = isStarting ? "#ff3914" : "#39ff14";
