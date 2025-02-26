@@ -35,65 +35,6 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-const DATA_URL = 'http://127.0.0.1:5000/send_data';  // כתובת ה-GET
-
-async function fetchReceivedData() {
-    try {
-        const response = await fetch(DATA_URL);
-        if (!response.ok) {
-            throw new Error('שגיאה בטעינת הנתונים מהשרת');
-        }
-        const jsonData = await response.json();
-        console.log("📥 נתונים שהתקבלו מהשרת:", jsonData);
-        
-        // כאן תוכל לעדכן את ה-HTML עם הנתונים
-        updateUIWithReceivedData(jsonData);
-    } catch (error) {
-        console.error("שגיאה בטעינת הנתונים:", error);
-    }
-}
-
-function updateUIWithReceivedData(data) {
-    // עדכון ה-HTML עם הנתונים שהתקבלו
-    ELEMENTS.resultData.innerHTML = "<pre>" + JSON.stringify(data, null, 4) + "</pre>";
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // קבועים גלובליים
