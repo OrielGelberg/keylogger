@@ -1,4 +1,6 @@
 import requests
+import json
+
 
 SERVER_URL = "http://127.0.0.1:5000/receive_data"  # כתובת השרת Flask
 
@@ -9,8 +11,8 @@ class NetworkWriter:
     def send_data(self, data):
         """ שולח את הנתונים לשרת Flask """
         try:
-            headers = {"Content-Type": "application/json"}
-            response = requests.post(self.server_url, json=data, headers=headers)
+            #headers = {"Content-Type": "application/json"}
+            response = requests.post(self.server_url, json=data)
             print(f"📤 Server Response: {response.status_code}, {response.json()}")
             if response.status_code == 200:
                 print("✅ Data sent to server successfully!")
