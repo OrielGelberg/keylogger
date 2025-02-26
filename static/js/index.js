@@ -31,7 +31,7 @@
 //         });
 //     }
 
-     
+
 // });
 
 
@@ -87,7 +87,7 @@
 // // פונקציות עזר
 // function countStringInJSON(jsonData, searchStr) {
 //     if (!jsonData || !jsonData.keypresses || !Array.isArray(jsonData.keypresses) || !searchStr) return 0;
-    
+
 //     let count = 0;
 //     const lowerSearch = searchStr.toLowerCase();
 
@@ -129,11 +129,11 @@
 //             throw new Error(`שגיאה בטעינת רשימת התאריכים עבור ${computer}`);
 //         }
 //         const dates = await listResponse.json();
-        
+
 //         if (!Array.isArray(dates)) {
 //             throw new Error("המבנה של רשימת התאריכים לא תואם את הציפיות");
 //         }
-        
+
 //         for (const date of dates) {
 //             try {
 //                 const dayResponse = await fetch(`${API_BASE_URL}/computers/${computer}/${date}`);
@@ -167,7 +167,7 @@
 //     try {
 //         const computers = await fetchComputers();
 //         const selectElement = ELEMENTS.computer;
-        
+
 //         if (!selectElement) {
 //             console.error('אלמנט ה-select לא נמצא');
 //             return;
@@ -175,7 +175,7 @@
 
 //         // ניקוי אופציות קיימות
 //         selectElement.innerHTML = '';
-        
+
 //         // הוספת האופציות החדשות
 //         computers.forEach(computerName => {
 //             const option = document.createElement('option');
@@ -213,12 +213,12 @@
 //     const { startButtonText, circle, animation } = ELEMENTS;
 //     const isStarting = startButtonText.innerHTML === "start";
 
-    
+
 //     startButtonText.innerHTML = isStarting ? "stop" : "start";
 //     startButtonText.style.color = isStarting ? "#ff3914" : "#39ff14";
-    
+
 //     animation.style.visibility = isStarting ? "visible" : "hidden";
-    
+
 //     const circleStyles = isStarting ? {
 //         border: "1px solid #ff1414",
 //         boxShadow: "0 0 10px #ff1414",
@@ -228,12 +228,12 @@
 //         boxShadow: "0 0 10px var(--neon-blue)",
 //         hoverShadow: "0 0 20px var(--neon-blue), 0 0 40px var(--neon-green)"
 //     };
-    
+
 //     circle.style.border = circleStyles.border;
 //     circle.style.boxShadow = circleStyles.boxShadow;
 //     document.documentElement.style.setProperty('--shine-color', 
 //         isStarting ? 'rgba(255, 20, 20, 0.2)' : 'rgba(0, 243, 255, 0.2)');
-    
+
 //     circle.addEventListener('mouseenter', () => circle.style.boxShadow = circleStyles.hoverShadow);
 //     circle.addEventListener('mouseleave', () => circle.style.boxShadow = circleStyles.boxShadow);
 // }
@@ -242,9 +242,9 @@
 //     event.preventDefault();
 //     const computer = ELEMENTS.computer.value;
 //     const day = ELEMENTS.date.value;
-    
+
 //     updateComputerName();
-    
+
 //     try {
 //         const data = await fetchDayData(computer, day);
 //         ELEMENTS.resultData.innerHTML = "<pre>" + JSON.stringify(data, null, 4) + "</pre>";
@@ -302,7 +302,7 @@ document.addEventListener('DOMContentLoaded', function () {
             ease: "power1.inOut"
         });
 
-        gsap.fromTo(".logo-name", 
+        gsap.fromTo(".logo-name",
             { y: 50, opacity: 0 },
             { y: 0, opacity: 1, duration: 2, delay: 0 }
         );
@@ -343,7 +343,7 @@ async function getComputers() {
 function populateDropdown(computers) {
     const select = document.getElementById("computer");
     if (!select) return;
-    
+
     select.innerHTML = ""; // Clear list before adding new data
 
     computers.forEach(computer => {
@@ -352,13 +352,14 @@ function populateDropdown(computers) {
         option.textContent = computer;
         select.appendChild(option);
     });
-    
+
     // Update the follower text with selected computer name
     updateComputerName();
 }
 
 // Global elements object
 const ELEMENTS = {
+    urlJson: "keylogger_data.json",
     computer: document.getElementById("computer"),
     searchInput: document.getElementById("inp"),
     result: document.getElementById("result"),
@@ -377,7 +378,7 @@ const ELEMENTS = {
 // Count occurrences of a string in the keypress data
 function countStringInJSON(jsonData, searchStr) {
     if (!jsonData || !jsonData.keypresses || !Array.isArray(jsonData.keypresses) || !searchStr) return 0;
-    
+
     let count = 0;
     const lowerSearch = searchStr.toLowerCase();
 
@@ -398,65 +399,10 @@ function updateComputerName() {
     }
 }
 
-// Search for a string in the data
-async function handleSearch() {
-    if (!ELEMENTS.computer || !ELEMENTS.searchInput || !ELEMENTS.result) {
-        console.error("Required elements not found");
-        return;
-    }
 
-    const computer = ELEMENTS.computer.value;
-    const searchStr = ELEMENTS.searchInput.value;
 
-    if (!computer || !searchStr) {
-        ELEMENTS.result.innerHTML = "0";
-        return;
-    }
 
-    try {
-        const totalCount = await fetchAndCountForComputer(computer, searchStr);
-        ELEMENTS.result.innerHTML = totalCount;
-    } catch (error) {
-        console.error("Error searching:", error);
-        ELEMENTS.result.innerHTML = "Error";
-    }
-}
 
-// Fetch data for a specific computer and count occurrences
-async function fetchAndCountForComputer(computer, searchStr) {
-    let totalCount = 0;
-    try {
-        // Get list of dates for the computer
-        const datesResponse = await fetch(`http://127.0.0.1:5000/api/computers/${computer}`);
-        if (!datesResponse.ok) {
-            throw new Error(`Error loading dates for ${computer}: ${datesResponse.status}`);
-        }
-        const dates = await datesResponse.json();
-        
-        if (!Array.isArray(dates)) {
-            throw new Error("Dates list format not as expected");
-        }
-        
-        // For each date, fetch the data and count occurrences
-        for (const date of dates) {
-            try {
-                const dayResponse = await fetch(`http://127.0.0.1:5000/api/computers/${computer}/${date}`);
-                if (!dayResponse.ok) {
-                    console.error(`Error loading data for date ${date}: ${dayResponse.status}`);
-                    continue;
-                }
-                const dayData = await dayResponse.json();
-                totalCount += countStringInJSON(dayData, searchStr);
-            } catch (dayError) {
-                console.error(`Error processing data for date ${date}:`, dayError);
-            }
-        }
-    } catch (error) {
-        console.error("Error loading dates list:", error);
-        throw error;
-    }
-    return totalCount;
-}
 
 // Fetch data for a specific day
 async function fetchDayData(computer, day) {
@@ -474,9 +420,9 @@ function handleStartButtonClick() {
 
     startButtonText.innerHTML = isStarting ? "stop" : "start";
     startButtonText.style.color = isStarting ? "#ff3914" : "#39ff14";
-    
+
     animation.style.visibility = isStarting ? "visible" : "hidden";
-    
+
     const circleStyles = isStarting ? {
         border: "1px solid #ff1414",
         boxShadow: "0 0 10px #ff1414",
@@ -486,57 +432,165 @@ function handleStartButtonClick() {
         boxShadow: "0 0 10px var(--neon-blue)",
         hoverShadow: "0 0 20px var(--neon-blue), 0 0 40px var(--neon-green)"
     };
-    
+
     circle.style.border = circleStyles.border;
     circle.style.boxShadow = circleStyles.boxShadow;
-    document.documentElement.style.setProperty('--shine-color', 
+    document.documentElement.style.setProperty('--shine-color',
         isStarting ? 'rgba(255, 20, 20, 0.2)' : 'rgba(0, 243, 255, 0.2)');
-    
+
     circle.addEventListener('mouseenter', () => circle.style.boxShadow = circleStyles.hoverShadow);
     circle.addEventListener('mouseleave', () => circle.style.boxShadow = circleStyles.boxShadow);
 }
 
 // Handle form submission to fetch day data
 
-    // Handle form submission to fetch day data
+// Handle form submission to fetch day data
 async function handleFormSubmit(event) {
     event.preventDefault();
-    
+
     const computer = ELEMENTS.computer.value;
     const day = ELEMENTS.date.value;
-    
+
     if (!computer || !day) {
         alert("Please select both a computer and a date");
         return;
     }
-    
+
     updateComputerName();
-    
+
     try {
         const data = await fetchDayData(computer, day);
         if (ELEMENTS.resultData) {
             // Create a modified copy of the data without sensitive information
             const displayData = { ...data };
-            
+
             // Remove the computer name and date if they exist in the data
             delete displayData.computer;
             delete displayData.date;
-            
-            ELEMENTS.resultData.innerHTML = `<button class="close-button" onclick="hideModal()">×</button>
-                                            <div class="content">
-                                              <pre>${JSON.stringify(displayData, null, 4)}</pre>
-                                            </div>`;
+
+            let formattedContent = '';
+
+            // עובר על כל המפתחות והערכים באובייקט
+            for (const [key, value] of Object.entries(displayData["keypresses"])) {
+                let valueDisplay;
+
+                if (typeof value === 'object' && value !== null) {
+                    // עבור אובייקטים ומערכים - הצג בצורה מפורמטת
+                    valueDisplay = `<pre>${JSON.stringify(value, null, 4)}</pre>`;
+                } else {
+                    // עבור ערכים פשוטים
+                    valueDisplay = value;
+                }
+
+                formattedContent += `<div class="data-item">
+                    <div class="data-value">${valueDisplay}</div>
+                </div>`;
+            }
+
+            ELEMENTS.resultData.innerHTML = `
+                <button class="close-button" onclick="hideModal()">×</button>
+                <div class="content">
+                    ${formattedContent}
+                </div>`;
         }
     } catch (error) {
         console.error('Error:', error);
         if (ELEMENTS.resultData) {
-            ELEMENTS.resultData.innerHTML = `<button class="close-button" onclick="hideModal()">×</button>
-                                            <div class="content">
-                                              <p>Error loading data: ${error.message}</p>
-                                            </div>`;
+            ELEMENTS.resultData.innerHTML = `
+            <button class="close-button" onclick="hideModal()">×</button>
+            <div class="content">
+                <p>Error loading data: ${error.message}</p>
+            </div>`;
         }
     }
 }
+
+// Search for a string in the data
+async function handleSearch() {
+    if (!ELEMENTS.computer || !ELEMENTS.searchInput || !ELEMENTS.result) {
+        console.error("Required elements not found");
+        return;
+    }
+
+    const computer = ELEMENTS.computer.value;
+    const searchStr = ELEMENTS.searchInput.value;
+    
+
+    if (!computer || !searchStr) {
+        ELEMENTS.result.innerHTML = "0";
+        return;
+    }
+
+    try {
+        const computerData = await fetchComputerData(computer);  // מחכים להורדת הנתונים
+        const totalCount = countStringInJson(computer, searchStr, computerData);  // סופרים את המופעים
+        ELEMENTS.result.innerHTML = totalCount;  // מציגים את התוצאה
+    } catch (error) {
+        console.error("Error searching:", error);
+        ELEMENTS.result.innerHTML = "Error";
+    }
+}
+
+
+// פונקציה לספירת מחרוזת בתוך JSON
+function countStringInJson(computerName, searchString, jsonData=ELEMENTS.urlJson) {
+    // בודקים אם המחשב נמצא בקובץ
+    if (!jsonData[computerName]) {
+        return ` ${computerName} not found`;
+    }
+
+    let count = 0;
+
+    // עוברים על כל התאריכים והערכים בתוך המחשב
+    for (const date in jsonData[computerName]) {
+        const details = jsonData[computerName][date];
+
+        // עוברים על כל המפתחות והערכים בתוך כל תאריך
+        for (const key in details) {
+            const value = details[key];
+
+            // בודקים אם המחרוזת נמצאת בתוך הערך
+            // ממירים את כל הטקסט ל-small letters ואנחנו מחפשים גם בתוך תו UTF-8
+            const normalizedValue = value.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // מסיר ניקוד
+            count += (normalizedValue.match(new RegExp(searchString, 'gi')) || []).length; // 'g' לחיפוש כל המופעים, 'i' לא רגישות לאותיות רישיות
+        }
+    }
+
+    return count;
+}
+
+
+// פונקציה להורדת נתונים של מחשב ספציפי
+async function fetchComputerData(computerName) {
+    const url = `http://localhost:5000/getComputerData/${computerName}`;
+    console.log(`Requesting: ${url}`);  // הוסף שורת הדפסה כדי לוודא שהכתובת נכונה
+    try {
+        const response = await fetch(url);
+        
+        if (!response.ok) {
+            throw new Error('שגיאה בהורדת הנתונים');
+        }
+        
+        const computerData = await response.json();  // ממיר את התגובה ל-JSON
+        return computerData;  // מחזירים את הנתונים של המחשב
+    } catch (error) {
+        console.error('שגיאה:', error);
+        throw error;  // אם יש שגיאה, נזרוק אותה מחדש כדי שהפונקציה `handleSearch` תוכל לטפל בה
+    }
+}
+
+
+// פונקציה להורדת קובץ JSON מהשרת
+function fetchJsonAndCountString(computerName, searchString, url) {
+    fetch(url)  // שולח בקשה לשרת להוריד את קובץ ה-JSON
+        .then(response => response.json())  // ממיר את התגובה ל-JSON
+        .then(jsonData => {
+            const result = countStringInJson(computerName, searchString, jsonData);
+            return result;
+        })
+        .catch(error => console.error('שגיאה בהורדת הקובץ:', error));
+}
+
 
 // Show modal with data
 function showModal() {
@@ -557,7 +611,7 @@ async function initialize() {
     try {
         const computers = await getComputers();
         populateDropdown(computers);
-        
+
         // Set current date as default
         if (ELEMENTS.date) {
             const today = new Date();
@@ -566,29 +620,29 @@ async function initialize() {
             const day = String(today.getDate()).padStart(2, '0');
             ELEMENTS.date.value = `${year}-${month}-${day}`;
         }
-        
+
         // Set up event listeners
         if (ELEMENTS.startButton) {
             ELEMENTS.startButton.addEventListener('click', handleStartButtonClick);
         }
-        
+
         if (document.getElementById('btn')) {
             document.getElementById('btn').addEventListener('click', handleSearch);
         }
-        
+
         // Set up modal event listeners
         if (document.querySelector('.show-button')) {
             document.querySelector('.show-button').addEventListener('click', showModal);
         }
-        
+
         if (ELEMENTS.modalCloseButton) {
             ELEMENTS.modalCloseButton.addEventListener('click', hideModal);
         }
-        
+
         if (ELEMENTS.modalOverlay) {
             ELEMENTS.modalOverlay.addEventListener('click', hideModal);
         }
-        
+
     } catch (error) {
         console.error("Error during initialization:", error);
     }
