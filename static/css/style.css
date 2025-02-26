@@ -266,9 +266,8 @@ body::before {
   padding: 8px 20px;
   background: transparent;
   cursor: pointer;
-
   border: 1px solid var(--neon-green);
-  border-radius: 20px;
+  border-radius: 10px;
   color: var(--neon-green);
   position: relative;
   overflow: hidden;
@@ -306,12 +305,10 @@ body::before {
 
 .search-card {
   width: 90%;
-  height: 40px;
   position: relative;
 }
 
 .search{
-  padding: 25px;
   flex-direction: row;
 }
 .input-search {
@@ -663,4 +660,34 @@ input {
 .left-side>* {
   width: 100%;
   box-sizing: border-box;
+}
+.about-section {
+  padding: 15px;
+  border-top: 1px solid rgba(0, 243, 255, 0.3);
+  margin-top: auto;
+}
+
+.about-title {
+  color: #00ff41;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.about-content {
+  color: #b0b0b0;
+  font-size: 14px;
+  line-height: 1;
+}
+.about{
+  font-weight: 100;
+}
+
+.version-info {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #707070;
+}
+.app-section{
+  margin-top: 20px;
 }
