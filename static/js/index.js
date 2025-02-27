@@ -506,6 +506,32 @@ async function handleFormSubmit(event) {
 }
 
 // Search for a string in the data
+// async function handleSearch() {
+//     if (!ELEMENTS.computer || !ELEMENTS.searchInput || !ELEMENTS.result) {
+//         console.error("Required elements not found");
+//         return;
+//     }
+
+//     const computer = ELEMENTS.computer.value;
+//     const searchStr = ELEMENTS.searchInput.value;
+    
+
+//     if (!computer || !searchStr) {
+//         ELEMENTS.result.innerHTML = "0";
+//         return;
+//     }
+
+//     try {
+//         const computerData = await fetchComputerData(computer);  // מחכים להורדת הנתונים
+//         const totalCount = countStringInJson(computer, searchStr, computerData);  // סופרים את המופעים
+//         ELEMENTS.result.innerHTML = totalCount;  // מציגים את התוצאה
+//     } catch (error) {
+//         console.error("Error searching:", error);
+//         ELEMENTS.result.innerHTML = "Error";
+//     }
+// }
+
+// Update the handleSearch function
 async function handleSearch() {
     if (!ELEMENTS.computer || !ELEMENTS.searchInput || !ELEMENTS.result) {
         console.error("Required elements not found");
@@ -515,20 +541,63 @@ async function handleSearch() {
     const computer = ELEMENTS.computer.value;
     const searchStr = ELEMENTS.searchInput.value;
     
-
     if (!computer || !searchStr) {
         ELEMENTS.result.innerHTML = "0";
         return;
     }
 
     try {
-        const computerData = await fetchComputerData(computer);  // מחכים להורדת הנתונים
-        const totalCount = countStringInJson(computer, searchStr, computerData);  // סופרים את המופעים
-        ELEMENTS.result.innerHTML = totalCount;  // מציגים את התוצאה
+        // First, get all dates for this computer
+        const datesResponse = await fetch(`http://127.0.0.1:5000/api/computers/${computer}`);
+        if (!datesResponse.ok) {
+            throw new Error(`Error fetching dates: ${datesResponse.status}`);
+        }
+        const dates = await datesResponse.json();
+        
+        let totalCount = 0;
+        
+        // For each date, fetch and process data
+        for (const date of dates) {
+            const dayDataResponse = await fetch(`http://127.0.0.1:5000/api/computers/${computer}/${date}`);
+            if (!dayDataResponse.ok) {
+                console.error(`Error fetching data for ${date}: ${dayDataResponse.status}`);
+                continue;
+            }
+            
+            const dayData = await dayDataResponse.json();
+            totalCount += countOccurrences(dayData, searchStr);
+        }
+        
+        ELEMENTS.result.innerHTML = totalCount;
     } catch (error) {
         console.error("Error searching:", error);
         ELEMENTS.result.innerHTML = "Error";
     }
+}
+
+// New function to count occurrences in the returned data format
+function countOccurrences(dayData, searchStr) {
+    if (!dayData || !dayData.keypresses || !Array.isArray(dayData.keypresses)) {
+        return 0;
+    }
+    
+    const lowerSearch = searchStr.toLowerCase();
+    let count = 0;
+    
+    dayData.keypresses.forEach(item => {
+        if (item.key) {
+            // If key is an object or array, convert it to string first
+            const keyString = typeof item.key === 'object' ? 
+                JSON.stringify(item.key) : String(item.key);
+            
+            // Count occurrences
+            const keyLower = keyString.toLowerCase();
+            // Count by splitting and subtracting 1 (number of delimiters = occurrences)
+            count += keyLower.split(lowerSearch).length - 1;
+        }
+    });
+    
+    return count;
 }
 
 
