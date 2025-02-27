@@ -548,7 +548,6 @@ input {
   height: 200px;
   flex-wrap: wrap;
   gap: 10px;
-  margin-bottom: 20px;
 }
 
 .stats-panel {
@@ -640,15 +639,15 @@ input {
   align-items: center;
   gap: 10px;
 }
-
 .right-side {
   width: 50%;
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between; /* מפזר את הבלוקים בקצוות */
+  align-items: center; /* ממקם אותם במרכז האופקי */
   gap: 10px;
+
 }
 
 .left-side {
