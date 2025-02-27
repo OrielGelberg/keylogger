@@ -1,5 +1,3 @@
-
-
 from flask import Flask, request, jsonify, abort
 from flask_cors import CORS
 import json
