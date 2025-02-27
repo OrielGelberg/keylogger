@@ -479,6 +479,8 @@ body.modal-open {
 .show-button {
   background: var(--cyber-dark);
   color: #39ff14;
+  padding: 10px;
+  margin-top: 15px;
   border: 1px solid var(--neon-green);
   border-radius: 10px;
   cursor: pointer;
@@ -578,6 +580,9 @@ input {
   margin: 5px 0;
 }
 
+form h2{
+  font-size: 2.5rem;
+}
 .stats-icon {
   font-size: 1.5rem;
   color: var(--neon-green);
@@ -616,6 +621,7 @@ input {
 
 .form-group {
   display: flex;
+  padding-top: 15px;
   flex-direction: column;
   gap: 10px;
   width: 100%;
